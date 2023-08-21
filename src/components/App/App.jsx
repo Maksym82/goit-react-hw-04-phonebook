@@ -45,6 +45,22 @@ export const App = () => {
     ]);
   }
 
+  const changeFilter = event => {
+    setFilter(event.target.value);
+  }
+  const getVisualContacts = () => {
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter(
+      contact => 
+      contact.name.toLowerCase().includes(normalizedFilter) ||
+      contact.number.includes(normalizedFilter)
+    )
+  }
+  const visualContacts = getVisualContacts();
+
+
+  
 
 
 

@@ -59,78 +59,38 @@ export const App = () => {
   }
   const visualContacts = getVisualContacts();
 
+  const deleteContact = contactId => {
+    setContacts(prevContacts => 
+      prevContacts.filter(contact => contact.id !== contactId)
+    )
+  };
 
-  
-
-
-
+  return (
+    <Container>
+      <Title>Phonebook</Title>
+      <ContactForm onSubmit={addContact} />
+      <SubTitle>Contacts</SubTitle>
+      {contacts.length > 0 ? (
+        <Filter value={filter} onChangeFilter={changeFilter} />
+      ) : (
+        <Wrapper>The contact book is empty! Add new contact!</Wrapper>
+      )}
+      {contacts.length > 0 && (
+        <ContactList
+          contacts={visualContacts}
+          onDeleteContact={deleteContact}
+        />
+      )}
+    </Container>
+  )
 }
  
 
   
 
-  deleteContact = contactId => {
-    this.setState(prevState => {
-      return {
-        contacts: prevState.contacts.filter(({ id }) => id !== contactId),
-        filter: '',
-      };
-    });
-  };
+  
+ 
 
-  changeFilter = event => {
-    this.setState({ filter: event.target.value });
-  };
+ 
 
-  addContact = contact => {
-    const isContacts = this.state.contacts.some(
-      ({ name, number }) =>
-        name.toLowerCase() === contact.name.toLowerCase() ||
-        contact.number === number
-    );
-
-    if (isContacts) {
-      Notiflix.Notify.info(
-        `${contact.name} or ${contact.number} is already in contacts`
-      );
-      return;
-    }
-    this.setState(prevState => ({
-      contacts: [{ id: nanoid(), ...contact }, ...prevState.contacts],
-    }));
-  };
-
-  getVisualContacts = () => {
-    const { filter, contacts } = this.state;
-
-    return contacts.filter(
-      contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase()) ||
-        contact.number.includes(filter)
-    );
-  };
-
-  render() {
-    const visualContacts = this.getVisualContacts();
-    const { filter } = this.state;
-    return (
-      <Container>
-        <Title>Phonebook</Title>
-        <ContactForm onSubmit={this.addContact} />
-        <SubTitle>Contacts</SubTitle>
-        {this.state.contacts.length > 0 ? (
-          <Filter value={filter} onChangeFilter={this.changeFilter} />
-        ) : (
-          <Wrapper>The contact book is empty! Add new contacts</Wrapper>
-        )}
-        {this.state.contacts.length > 0 && (
-          <ContactList
-            contacts={visualContacts}
-            onDeleteContact={this.deleteContact}
-           
-          />
-        )}
-      </Container>
-    );
-  }
-}
+ 

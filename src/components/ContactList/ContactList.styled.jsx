@@ -34,6 +34,3 @@ export const Button = styled.button`
     cursor: pointer;
 `;
 
-export const Text = styled.p`
-
-`;
